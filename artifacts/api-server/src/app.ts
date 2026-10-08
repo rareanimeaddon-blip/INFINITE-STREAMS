@@ -245,16 +245,6 @@ function serveLandingPage(req: express.Request, res: express.Response) {
       category: "movies",
     },
     {
-      key: "hdghartv",
-      name: "HDGharTV",
-      emoji: "🏚️",
-      color: "#ef4444",
-      glow: "rgba(239,68,68,0.25)",
-      tags: ["4K", "1080p", "720p", "Movies & Series"],
-      desc: "Multi-quality direct streams via hdghartv.cc, sorted from 4K down to 360p.",
-      category: "movies",
-    },
-    {
       key: "vaplayer",
       name: "VaPlayer",
       emoji: "🎮",
@@ -326,6 +316,9 @@ function serveLandingPage(req: express.Request, res: express.Response) {
     },
   ];
 
+  const animeProviderCount = providers.filter((provider) => provider.category === "anime").length;
+  const movieProviderCount = providers.filter((provider) => provider.category === "movies").length;
+
   const providerCards = providers
     .map(
       (p) => `
@@ -373,7 +366,7 @@ function serveLandingPage(req: express.Request, res: express.Response) {
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="INFINITE STREAMS — 25 providers, one addon. Kartoons, AnimeSalt, AnimeWorld, RareAnime, AnimeDekho, PirateXPlay, NetMirror, StreamFlix, Stellar, DooFlix, CastleTV, OneTouchTV, VidLink, MovieBox, ShowBox, MeowTV, MoviesDrive, HDGharTV, VaPlayer, CineFreak, HindMoviez, KMMovies, 4KHDHub, HDHub4U, ZXCStreams. Install in one click."/>
+<meta name="description" content="INFINITE STREAMS — 24 providers, one addon. Kartoons, AnimeSalt, AnimeWorld, RareAnime, AnimeDekho, PirateXPlay, NetMirror, StreamFlix, Stellar, DooFlix, CastleTV, OneTouchTV, VidLink, MovieBox, ShowBox, MeowTV, MoviesDrive, VaPlayer, CineFreak, HindMoviez, KMMovies, 4KHDHub, HDHub4U, ZXCStreams. Install in one click."/>
 <title>INFINITE STREAMS — Stremio Addon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet"/>
@@ -646,13 +639,13 @@ footer{border-top:1px solid var(--border);padding:52px 0;text-align:center}
 <section class="section">
   <div class="container">
     <div class="section-label">Providers</div>
-    <h2 class="section-title">23 sources, one install</h2>
+    <h2 class="section-title">${providers.length} sources, one install</h2>
     <p class="section-sub">Every provider is queried in parallel and deduplicated — you always get the best available stream.</p>
 
     <div class="cat-tabs">
-      <button class="cat-tab active" onclick="filterCat('all',this)">All (23)</button>
-      <button class="cat-tab" onclick="filterCat('anime',this)">🎌 Anime (4)</button>
-      <button class="cat-tab" onclick="filterCat('movies',this)">🎬 Movies &amp; TV (18)</button>
+      <button class="cat-tab active" onclick="filterCat('all',this)">All (${providers.length})</button>
+      <button class="cat-tab" onclick="filterCat('anime',this)">🎌 Anime (${animeProviderCount})</button>
+      <button class="cat-tab" onclick="filterCat('movies',this)">🎬 Movies &amp; TV (${movieProviderCount})</button>
     </div>
 
     <div class="providers-grid" id="providers-grid">${providerCards}</div>
@@ -669,7 +662,7 @@ footer{border-top:1px solid var(--border);padding:52px 0;text-align:center}
     <div class="configure-box">
       <div class="configure-header">
         <span class="configure-title">Provider Selection</span>
-        <span class="sel-count" id="sel-count">23 / 23 selected</span>
+        <span class="sel-count" id="sel-count">${providers.length} / ${providers.length} selected</span>
       </div>
       <div class="configure-actions">
         <button class="cfg-action-btn" onclick="selectAll()">Select All</button>

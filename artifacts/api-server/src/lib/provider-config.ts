@@ -4,7 +4,7 @@
  * Provider order must match the landing-page checkboxes.
  * The config mask has one bit per provider.
  * '1' means enabled, '0' means disabled.
- * "1111111111111111111111111" = all providers enabled (default).
+ * ALL_PROVIDERS_MASK enables every current provider by default.
  */
 
 export const PROVIDER_LIST = [
@@ -25,7 +25,6 @@ export const PROVIDER_LIST = [
   "showbox",
   "meowtv",
   "moviesdrive",
-  "hdghartv",
   "vaplayer",
   "cinefreak",
   "hindmovies",
@@ -37,7 +36,7 @@ export const PROVIDER_LIST = [
 
 export type ProviderKey = (typeof PROVIDER_LIST)[number];
 
-export const ALL_PROVIDERS_MASK = "1111111111111111111111111";
+export const ALL_PROVIDERS_MASK = "1".repeat(PROVIDER_LIST.length);
 
 export function parseProviderConfig(config: string): Set<ProviderKey> {
   const enabled = new Set<ProviderKey>();
@@ -54,6 +53,12 @@ export function isEnabled(config: Set<ProviderKey>, provider: ProviderKey): bool
 }
 
 export function maskToConfig(mask: string): Set<ProviderKey> {
-  const clean = mask.replace(/[^01]/g, "1").padEnd(PROVIDER_LIST.length, "1");
+  let clean = mask.replace(/[^01]/g, "1");
+  // Older saved 25-bit masks have one retired slot before VaPlayer. Drop that
+  // bit so saved selections for the remaining providers keep their meaning.
+  if (clean.length === PROVIDER_LIST.length + 1) {
+    clean = `${clean.slice(0, 17)}${clean.slice(18)}`;
+  }
+  clean = clean.padEnd(PROVIDER_LIST.length, "1");
   return parseProviderConfig(clean);
 }

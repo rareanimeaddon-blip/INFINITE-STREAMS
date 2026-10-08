@@ -58,7 +58,6 @@ router.get("/debug", (_req, res) => {
     showbox: /(?:^|\s)sb=(\d+)/i,
     meowtv: /(?:^|\s)mw=(\d+)/i,
     moviesdrive: /(?:^|\s)md=(\d+)/i,
-    hdghartv: /(?:^|\s)hg=(\d+)/i,
     vaplayer: /(?:^|\s)vp=(\d+)/i,
     cinefreak: /(?:^|\s)cf=(\d+)/i,
     hindmovies: /(?:^|\s)hm=(\d+)/i,
@@ -365,7 +364,6 @@ const PROVIDER_PATTERNS: Record<string, RegExp> = {
 
   meowtv:       /MeowTV/i,
   moviesdrive:  /MoviesDrive/i,
-  hdghartv:     /HDGharTV/i,
   vaplayer:     /VaPlayer/i,
   cinefreak:    /CineFreak/i,
   hindmovies:   /HindMoviez/i,
@@ -509,7 +507,6 @@ router.get("/debug/health", (_req, res) => {
 
     meowtv:       { emoji: "🐱",  label: "MeowTV",        types: "Movies · Series" },
     moviesdrive:  { emoji: "🚗",  label: "MoviesDrive",   types: "Movies · Series" },
-    hdghartv:     { emoji: "🏚️", label: "HDGharTV",      types: "Movies · Series" },
     vaplayer:     { emoji: "🎮",  label: "VaPlayer",      types: "Movies · Series" },
     cinefreak:    { emoji: "🧊",  label: "CineFreak",     types: "Movies · Series" },
     hindmovies:   { emoji: "🎞️", label: "HindMoviez",    types: "Movies · Series" },

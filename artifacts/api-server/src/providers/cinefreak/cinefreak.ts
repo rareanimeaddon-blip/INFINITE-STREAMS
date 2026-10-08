@@ -716,7 +716,7 @@ export async function getCinefreakStreams(
     const matched = matchResult(title, year ?? null, isTv ? season : null, results);
     if (!matched) return [];
 
-    // 2b. Layer 2 — IMDB ID cross-check (see HDGharTV/HDHub4U for rationale).
+    // 2b. Layer 2 — IMDB ID cross-check (see HDHub4U for rationale).
     // Only rejects on a CONFIRMED mismatch; an inconclusive TMDB lookup (null)
     // always passes through.
     if (imdbId?.startsWith("tt")) {

@@ -1,3 +1,5 @@
+import { ALL_PROVIDERS_MASK } from "./lib/provider-config.js";
+
 export const ADDON_ID = "community.infinitestreams.stremio";
 
 export const manifest = {
@@ -157,4 +159,4 @@ export const manifest = {
 
 // Provider config — order must match PROVIDER_LIST in lib/provider-config.ts.
 // KMMovies is positioned immediately after HindMoviez and before 4KHDHub.
-export const ALL_ENABLED_MASK = "1111111111111111111111111";
+export const ALL_ENABLED_MASK = ALL_PROVIDERS_MASK;

@@ -148,7 +148,7 @@ export const PROVIDER_VERIFY_REPORT = {
       note: "Title-search providers. The resolved provider title is attached to each stream and compared against the requested title. Both title mismatch and type conflict are detected.",
     },
     approximateTitleVerification: {
-      providers: ["Kartoons", "AnimeWorld", "RareAnime", "AnimeDekho", "HDGharTV", "CastleTV", "CineFreak"],
+      providers: ["Kartoons", "AnimeWorld", "RareAnime", "AnimeDekho", "CastleTV", "CineFreak"],
       note: "Title-search providers where similarity filtering is applied inside the provider wrapper. Streams are tagged with the requested title as approximation. AnimeDekho additionally reports its resolved content type, enabling type-conflict detection.",
     },
     limitationsNotes: {

@@ -360,7 +360,7 @@ export async function getStreams(
 
   if (!matchResult) return [];
 
-  // Layer 2 — IMDB ID cross-check (see HDGharTV/HDHub4U for the same pattern).
+  // Layer 2 — IMDB ID cross-check (see HDHub4U for the same pattern).
   // Generic short titles ("House") can score just above the fuzzy-matcher's
   // threshold against an unrelated title ("House of Stars") purely from
   // whole-word/starts-with overlap — this catches that case by confirming the
