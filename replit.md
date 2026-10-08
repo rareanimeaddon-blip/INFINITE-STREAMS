@@ -1,15 +1,16 @@
-# [Project name]
+# INFINITE STREAMS
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A Stremio HTTP add-on that exposes movie, series, and anime catalogs and streams through its API service. The `zxcstreams` provider is maintained under `artifacts/api-server/src/providers/zxcstreams`.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/api-server run dev` — build and run the API server on port 8080
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Manifest route: `/api/manifest.json`
+- Optional `FEBBOX_TOKEN` enables the ShowBox provider.
 
 ## Stack
 
@@ -22,23 +23,14 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
-
-## Architecture decisions
-
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- `artifacts/api-server/src/manifest.ts` — Stremio manifest and catalog declarations.
+- `artifacts/api-server/src/providers/` — provider implementations.
+- `artifacts/api-server/src/routes/stremio.ts` — manifest, catalog, meta, stream, and subtitle routes.
+- `artifacts/api-server/src/providers/zxcstreams/` — ZXCStreams API client, stream mapping, and proxy.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
-
-## User preferences
-
-_Populate as you build — explicit user instructions worth remembering across sessions._
-
-## Gotchas
-
-_Populate as you build — sharp edges, "always run X before Y" rules._
+The API server serves the Stremio manifest and provider-backed catalog/stream resources. Its public install URL ends in `/api/manifest.json`.
 
 ## Pointers
 
