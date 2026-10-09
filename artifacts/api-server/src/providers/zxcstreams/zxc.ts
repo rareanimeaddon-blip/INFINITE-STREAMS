@@ -4,7 +4,7 @@
  *
  * Flow:
  *   1. Look up TMDB id + title/year/date/imdb from Cinemeta using the IMDb id.
- *   2. POST /arf/stfunigga with the obfuscated media fields
+ *   2. POST /oink/nigga with the obfuscated media fields
  *      → { token, ts }.
  *   3. GET /backend_/sources/{icarus|berkas|orion}?... with all the obfuscated fields.
  *
@@ -98,7 +98,7 @@ let _discovery: Promise<string> | null = null;
  */
 async function verifyBase(base: string): Promise<string> {
   const probeId = "872585";
-  const r = await fetch(`${base}/arf/stfunigga`, {
+  const r = await fetch(`${base}/oink/nigga`, {
     method: "POST",
     headers: {
       ...COMMON_HEADERS,
@@ -159,6 +159,19 @@ async function discoverBase(): Promise<string> {
 
   const seen = new Set<string>();
   const unique = candidates.filter((c) => !seen.has(c) && seen.add(c));
+
+  // The last known base is usually still active. Validate it alone first so
+  // normal refreshes do not send a burst of token probes to sibling domains.
+  const lastKnownBase = unique.shift();
+  if (lastKnownBase) {
+    try {
+      const base = await verifyBase(lastKnownBase);
+      console.log(`[zxc] discovered base: ${base}`);
+      return base;
+    } catch {
+      // The player rotates domains occasionally; continue with portal discovery.
+    }
+  }
 
   // Verify in small batches so we never flood the origin with requests.
   for (let i = 0; i < unique.length; i += 4) {
@@ -254,7 +267,7 @@ async function requestServerToken(
       ? { [F.season]: season, [F.episode]: episode }
       : {}),
   });
-  const res = await fetch(`${base}/arf/stfunigga`, {
+  const res = await fetch(`${base}/oink/nigga`, {
     method: "POST",
     headers: {
       ...COMMON_HEADERS,
