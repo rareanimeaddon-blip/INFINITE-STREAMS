@@ -21,6 +21,7 @@ export const PROVIDER_LIST = [
   "castletv",
   "onetouchtv",
   "vidlink",
+  "cinejoy",
   "moviebox",
   "showbox",
   "meowtv",
@@ -54,10 +55,19 @@ export function isEnabled(config: Set<ProviderKey>, provider: ProviderKey): bool
 
 export function maskToConfig(mask: string): Set<ProviderKey> {
   let clean = mask.replace(/[^01]/g, "1");
-  // Older saved 25-bit masks have one retired slot before VaPlayer. Drop that
-  // bit so saved selections for the remaining providers keep their meaning.
+  // New custom install URLs carry a trailing sentinel bit so they stay
+  // distinguishable from older 25-bit masks with a retired slot.
   if (clean.length === PROVIDER_LIST.length + 1) {
+    clean = clean.slice(0, PROVIDER_LIST.length);
+  } else if (clean.length === PROVIDER_LIST.length) {
+    // Older 25-bit masks have one retired slot before VaPlayer. Drop it, then
+    // insert Cinejoy after VidLink with the default-enabled selection.
     clean = `${clean.slice(0, 17)}${clean.slice(18)}`;
+    clean = `${clean.slice(0, 13)}1${clean.slice(13)}`;
+  } else if (clean.length === PROVIDER_LIST.length - 1) {
+    // Previous current masks had 24 providers; preserve their selections when
+    // adding Cinejoy in the middle of the list.
+    clean = `${clean.slice(0, 13)}1${clean.slice(13)}`;
   }
   clean = clean.padEnd(PROVIDER_LIST.length, "1");
   return parseProviderConfig(clean);

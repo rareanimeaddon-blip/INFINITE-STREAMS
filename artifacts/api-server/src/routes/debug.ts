@@ -359,6 +359,7 @@ const PROVIDER_PATTERNS: Record<string, RegExp> = {
   castletv:     /CastleTV/i,
   onetouchtv:   /OneTouchTV/i,
   vidlink:      /VidLink/i,
+  cinejoy:      /Cinejoy/i,
   moviebox:     /MovieBox/i,
   showbox:      /ShowBox/i,
 
@@ -502,6 +503,7 @@ router.get("/debug/health", (_req, res) => {
     castletv:     { emoji: "🏰",  label: "CastleTV",      types: "Movies · Series" },
     onetouchtv:   { emoji: "📺",  label: "OneTouchTV",    types: "Movies · Series" },
     vidlink:      { emoji: "🔗",  label: "VidLink",       types: "Movies · Series" },
+    cinejoy:      { emoji: "🎞️", label: "Cinejoy",       types: "Movies · Series" },
     moviebox:     { emoji: "🍿",  label: "MovieBox",      types: "Movies · Series" },
     showbox:      { emoji: "📦",  label: "ShowBox",       types: "Movies · Series" },
 

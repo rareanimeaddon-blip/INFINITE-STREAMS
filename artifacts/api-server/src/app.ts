@@ -205,6 +205,16 @@ function serveLandingPage(req: express.Request, res: express.Response) {
       category: "movies",
     },
     {
+      key: "cinejoy",
+      name: "Cinejoy",
+      emoji: "🎞️",
+      color: "#ec4899",
+      glow: "rgba(236,72,153,0.25)",
+      tags: ["TMDB", "Movies & Series", "4 Servers"],
+      desc: "HLS and MP4 streams from Cinejoy via four server options: Nebula, Lisbon, solara and athnes.",
+      category: "movies",
+    },
+    {
       key: "moviebox",
       name: "MovieBox",
       emoji: "🍿",
@@ -366,7 +376,7 @@ function serveLandingPage(req: express.Request, res: express.Response) {
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="INFINITE STREAMS — 24 providers, one addon. Kartoons, AnimeSalt, AnimeWorld, RareAnime, AnimeDekho, PirateXPlay, NetMirror, StreamFlix, Stellar, DooFlix, CastleTV, OneTouchTV, VidLink, MovieBox, ShowBox, MeowTV, MoviesDrive, VaPlayer, CineFreak, HindMoviez, KMMovies, 4KHDHub, HDHub4U, ZXCStreams. Install in one click."/>
+<meta name="description" content="INFINITE STREAMS — 25 providers, one addon. Kartoons, AnimeSalt, AnimeWorld, RareAnime, AnimeDekho, PirateXPlay, NetMirror, StreamFlix, Stellar, DooFlix, CastleTV, OneTouchTV, VidLink, Cinejoy, MovieBox, ShowBox, MeowTV, MoviesDrive, VaPlayer, CineFreak, HindMoviez, KMMovies, 4KHDHub, HDHub4U, ZXCStreams. Install in one click."/>
 <title>INFINITE STREAMS — Stremio Addon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet"/>
@@ -773,13 +783,14 @@ const BASE = ${JSON.stringify(base)};
 const BP = ${JSON.stringify(BASE_PATH)};
 const PROVIDER_KEYS = ${JSON.stringify(PROVIDER_LIST)};
 const PROVIDER_CATS = ${JSON.stringify(providers.map(p => p.category))};
-let mask = Array(PROVIDER_KEYS.length).fill(1);
+let mask = Array(PROVIDER_KEYS.length + 1).fill(1);
+mask[PROVIDER_KEYS.length] = 0;
 
 function getMask(){ return mask.join(""); }
 
 function buildManifestUrl(){
   const m = getMask();
-  if(m === "${ALL_ENABLED_MASK}") return BASE + BP + "/manifest.json";
+  if(m === "${ALL_ENABLED_MASK}0") return BASE + BP + "/manifest.json";
   return BASE + BP + "/" + m + "/manifest.json";
 }
 
@@ -790,7 +801,7 @@ function buildStremioUrl(){
 function updateUrls(){
   const mUrl = buildManifestUrl();
   const sUrl = buildStremioUrl();
-  const count = mask.filter(v => v === 1).length;
+  const count = mask.slice(0, PROVIDER_KEYS.length).filter(v => v === 1).length;
   document.getElementById("custom-manifest-input").value = mUrl;
   document.getElementById("custom-install-btn").href = sUrl;
   const sc = document.getElementById("sel-count");
